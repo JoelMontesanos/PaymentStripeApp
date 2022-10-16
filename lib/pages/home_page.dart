@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:stripe_app/bloc/bloc/pagar_bloc.dart';
 import 'package:stripe_app/data/tarjetas.dart';
 import 'package:stripe_app/helpers/helpers.dart';
 import 'package:stripe_app/pages/full_pay_pagar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/total_pay_button.dart';
 
@@ -39,11 +41,12 @@ class HomeScreen extends StatelessWidget {
                   final tarjeta = tarjetas[i];
                   return GestureDetector(
                     onTap: (){
-                      Navigator.push(context, navegarFadeIn(context, FullPayScreen()));
+                      context.read<PagarBloc>().add(OnSeleccionarTarjeta(tarjeta));
+                      Navigator.push(context, navegarFadeIn(context, FullPayScreen()));                      
                     },
                     child: 
                     Hero(
-                      tag: tarjeta.cardNumber ,
+                      tag: tarjeta.cardNumber,
                       child: 
                       CreditCardWidget(
                         cardNumber: tarjeta.cardNumberHidden, 

@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stripe_app/bloc/bloc/pagar_bloc.dart';
+import 'package:stripe_app/models/tarjeta_credito.dart';
 
-import '../models/tarjeta_credito.dart';
 import '../widgets/total_pay_button.dart';
 
 class FullPayScreen extends StatelessWidget {
 
-  final tarjeta = TarjetaCredito(
-      cardNumberHidden: '4242',
-      cardNumber: '4242424242424242',
-      brand: 'visa',
-      cvv: '213',
-      expiracyDate: '01/25',
-      cardHolderName: 'Fernando Herrera'
-    );
+  final  TarjetaCredito? tarjeta = PagarBloc().state.tarjeta;// here is the details
 
-  
   @override
   Widget build(BuildContext context) {
+      print(tarjeta?.cvv);////// we're getting a null value here tha's what's needs to be fixed
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: (){
+            context.read<PagarBloc>().add(OnDesactivarTarjeta());
+            Navigator.pop(context);
+          },
+          ),
         title: Center(child: Text('')),
       ),
       body: Stack(        
         children: [
           Container(),
-          Hero(
+          /*Hero(
             tag: tarjeta.cardNumber,
             child: 
             CreditCardWidget(
@@ -37,14 +39,12 @@ class FullPayScreen extends StatelessWidget {
               showBackView: false,                   
               onCreditCardWidgetChange:(CreditCardBrand empty){} ,
             ),
-          ),
-
+          ),*/
 
           Positioned(
               bottom: 0,
               child: TotalPayButton()
             )
-
 
         ],
       ),

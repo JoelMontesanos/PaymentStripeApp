@@ -12,7 +12,7 @@ class CardScreen extends StatelessWidget {
       body: Center(
          child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             Icon(FontAwesomeIcons.star,color: Colors.white54, size: 100,),
             SizedBox(height: 20,),
             Text('Pago Realizado Correctamente', style: TextStyle(color: Colors.white54,fontSize: 25),),
